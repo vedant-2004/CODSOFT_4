@@ -1,1 +1,80 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+class ToDoList {
+private:
+    std::vector<std::string> tasks;
+
+public:
+    void addTask(const std::string& task) {
+        tasks.push_back(task);
+        std::cout << "Task added successfully!\n";
+    }
+
+    void viewTasks() {
+        if (tasks.empty()) {
+            std::cout << "Your To-Do List is empty!\n";
+        } else {
+            std::cout << "Your To-Do List:\n";
+            for (size_t i = 0; i < tasks.size(); ++i) {
+                std::cout << i + 1 << ". " << tasks[i] << "\n";
+            }
+        }
+    }
+
+    void deleteTask(size_t index) {
+        if (index >= 1 && index <= tasks.size()) {
+            tasks.erase(tasks.begin() + index - 1);
+            std::cout << "Task deleted successfully!\n";
+        } else {
+            std::cout << "Invalid task number. Please try again.\n";
+        }
+    }
+};
+
+int main() {
+    ToDoList todoList;
+
+    while (true) {
+        std::cout << "\n1. Add Task\n";
+        std::cout << "2. View Tasks\n";
+        std::cout << "3. Delete Task\n";
+        std::cout << "4. Exit\n";
+
+        int choice;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                std::string task;
+                std::cout << "Enter the task: ";
+                std::cin.ignore(); // Clear input buffer
+                std::getline(std::cin, task);
+                todoList.addTask(task);
+                break;
+            }
+            case 2:
+                todoList.viewTasks();
+                break;
+            case 3: {
+                todoList.viewTasks();
+                size_t index;
+                std::cout << "Enter the task number to delete: ";
+                std::cin >> index;
+                todoList.deleteTask(index);
+                break;
+            }
+            case 4:
+                std::cout << "Exiting...\n";
+                return 0;
+            default:
+                std::cout << "Invalid choice. Please try again.\n";
+        }
+    }
+
+    return 0;
+}
+
 
